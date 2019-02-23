@@ -1,4 +1,4 @@
-open Core;;
+open Core.Option;;
 open Printf
 
 type expr =
@@ -31,9 +31,9 @@ let rec eval e = match e with
                             then None
                             else Some (l / r)) left right
 and binOp f left right =
-    Option.bind
+    bind
         (eval left)
-        (fun l -> Option.bind (eval right) (fun r -> f l r))
+        (fun l -> bind (eval right) (fun r -> f l r))
         ;;
 
 let string_of_int_option o = match o with
