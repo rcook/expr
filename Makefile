@@ -1,13 +1,19 @@
 ALL_TARGETS :=
-HELLO_SOURCES := hello.ml
-HELLO_TARGETS := hello hello.cmi hello.cmo
+PROGRAM_NAME := expr
+MAIN_SOURCES := $(PROGRAM_NAME).ml
+MAIN_TARGETS := \
+	$(PROGRAM_NAME) \
+	$(PROGRAM_NAME).cmi \
+	$(PROGRAM_NAME).cmo \
+	$(PROGRAM_NAME).cmx \
+	$(PROGRAM_NAME).o
 
 .PHONY: default
-default: hello
+default: $(PROGRAM_NAME)
 
-$(HELLO_TARGETS): $(HELLO_SOURCES)
-	ocamlc -o $@ $<
-ALL_TARGETS += $(HELLO_TARGETS)
+$(MAIN_TARGETS): $(MAIN_SOURCES)
+	ocamlfind ocamlopt -o $@ -thread -linkpkg -package core $<
+ALL_TARGETS += $(MAIN_TARGETS)
 
 clean:
 	rm -rf $(ALL_TARGETS)
