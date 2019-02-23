@@ -1,4 +1,4 @@
-open Core.Option;;
+open Core.Option
 open Printf
 
 type expr =
@@ -7,7 +7,6 @@ type expr =
     | Sub of expr * expr
     | Mul of expr * expr
     | Div of expr * expr
-    ;;
 
 let rec to_sexpr e = match e with
     | Val x -> string_of_int x
@@ -19,7 +18,6 @@ let rec to_sexpr e = match e with
         sprintf "(mul %s %s)" (to_sexpr left) (to_sexpr right)
     | Div (left, right) ->
         sprintf "(div %s %s)" (to_sexpr left) (to_sexpr right)
-    ;;
 
 let rec eval e = match e with
     | Val x -> Some x
@@ -36,20 +34,18 @@ and binOp f left right =
         (fun l -> bind
             (eval right)
             (fun r -> f l r))
-        ;;
 
 let string_of_int_option o = match o with
     | None -> "None"
     | Some x -> sprintf "Some %d" x
 
-(* Divide by 2 *)
-let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 2);;
-print_endline (to_sexpr e);
-print_endline (string_of_int_option (eval e));
-;;
+let () =
+    (* Divide by 2 *)
+    let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 2) in
+    print_endline (to_sexpr e);
+    print_endline (string_of_int_option (eval e));
 
-(* Divide by 0 *)
-let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 0);;
-print_endline (to_sexpr e);
-print_endline (string_of_int_option (eval e));
-;;
+    (* Divide by 0 *)
+    let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 0) in
+    print_endline (to_sexpr e);
+    print_endline (string_of_int_option (eval e));
