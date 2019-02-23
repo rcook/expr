@@ -41,13 +41,13 @@ let string_of_int_option o = match o with
     | Some x -> sprintf "Some %d" x
 
 (* Divide by 2 *)
-let e0 = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 2);;
-print_endline (to_sexpr e0);
-print_endline (string_of_int_option (eval e0));
+let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 2);;
+print_endline (to_sexpr e);
+print_endline (string_of_int_option (eval e));
 ;;
 
 (* Divide by 0 *)
-let e0 = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 0);;
-print_endline (to_sexpr e0);
-print_endline (string_of_int_option (eval e0));
+let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 0);;
+print_endline (to_sexpr e);
+print_endline (string_of_int_option (eval e));
 ;;
