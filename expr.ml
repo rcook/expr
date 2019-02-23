@@ -33,7 +33,9 @@ let rec eval e = match e with
 and binOp f left right =
     bind
         (eval left)
-        (fun l -> bind (eval right) (fun r -> f l r))
+        (fun l -> bind
+            (eval right)
+            (fun r -> f l r))
         ;;
 
 let string_of_int_option o = match o with
