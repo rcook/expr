@@ -34,17 +34,17 @@ and binOpM left right f =
     eval right >>= fun r ->
     f l r
 
-let string_of_int_option = function
+let string_of_option f o = match o with
     | None -> "None"
-    | Some x -> sprintf "Some %d" x
+    | Some x -> sprintf "Some %s" (f x)
 
 let () =
     (* Divide by 2 *)
     let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 2) in
     print_endline (to_sexpr e);
-    print_endline (string_of_int_option (eval e));
+    print_endline (string_of_option string_of_int (eval e));
 
     (* Divide by 0 *)
     let e = Div (Mul (Val 2, Add (Val 3, Val 4)), Val 0) in
     print_endline (to_sexpr e);
-    print_endline (string_of_int_option (eval e));
+    print_endline (string_of_option string_of_int (eval e));
