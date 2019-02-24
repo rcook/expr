@@ -21,16 +21,18 @@ let rec to_sexpr e = match e with
 
 let rec eval e = match e with
     | Val x -> Some x
-    | Add (left, right) -> binOp (fun l r -> Some (l + r)) left right
-    | Sub (left, right) -> binOp (fun l r -> Some (l - r)) left right
-    | Mul (left, right) -> binOp (fun l r -> Some (l * r)) left right
-    | Div (left, right) -> binOp (fun l r ->
-                            if r = 0
-                            then None
-                            else Some (l / r)) left right
-and binOp f left right =
+    | Add (left, right) -> binOp left right (+)
+    | Sub (left, right) -> binOp left right (-)
+    | Mul (left, right) -> binOp left right ( * )
+    | Div (left, right) -> binOpM left right (fun l r ->
+        if r = 0
+            then None
+            else Some (l / r))
+and binOp left right f = map2 (eval left) (eval right) f
+and binOpM left right f =
     eval left >>= fun l ->
-    eval right >>= fun r -> f l r
+    eval right >>= fun r ->
+    f l r
 
 let string_of_int_option o = match o with
     | None -> "None"
