@@ -8,7 +8,7 @@ type expr =
     | Mul of expr * expr
     | Div of expr * expr
 
-let rec to_sexpr e = match e with
+let rec to_sexpr = function
     | Val x -> string_of_int x
     | Add (left, right) ->
         sprintf "(add %s %s)" (to_sexpr left) (to_sexpr right)
@@ -19,7 +19,7 @@ let rec to_sexpr e = match e with
     | Div (left, right) ->
         sprintf "(div %s %s)" (to_sexpr left) (to_sexpr right)
 
-let rec eval e = match e with
+let rec eval = function
     | Val x -> Some x
     | Add (left, right) -> binOp left right (+)
     | Sub (left, right) -> binOp left right (-)
@@ -34,7 +34,7 @@ and binOpM left right f =
     eval right >>= fun r ->
     f l r
 
-let string_of_int_option o = match o with
+let string_of_int_option = function
     | None -> "None"
     | Some x -> sprintf "Some %d" x
 
