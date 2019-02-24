@@ -29,8 +29,8 @@ let rec eval e = match e with
                             then None
                             else Some (l / r)) left right
 and binOp f left right =
-    eval left >>= (fun l ->
-    eval right >>= (fun r -> f l r))
+    eval left >>= fun l ->
+    eval right >>= fun r -> f l r
 
 let string_of_int_option o = match o with
     | None -> "None"
